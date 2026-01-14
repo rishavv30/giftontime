@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Signup – GiftOnTime{% endblock %}
+
+{% block content %}
+<section class="auth-page">
+    <div class="auth-card">
+        <h2>Create your account</h2>
+        <p>Start scheduling surprises on time.</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            
+            <input type="email" name="email" placeholder="Email address" required>
+            <input type="password" name="password1" placeholder="Password" required>
+            <input type="password" name="password2" placeholder="Confirm Password" required>
+
+            <button type="submit">Create Account</button>
+        </form>
+
+        <span class="auth-switch">
+            Already have an account? <a href="{% url 'login' %}">Login</a>
+        </span>
+    </div>
+</section>
+{% endblock %}

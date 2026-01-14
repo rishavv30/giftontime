@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="dashboard-page">
+    <div class="dashboard">
+        <div class="dashboard-header">
+            <h1>Your Scheduled Gifts</h1>
+            <a href="/order/new/" class="cta">+ Schedule New Gift</a>
+        </div>
+
+        {% if orders %}
+            <div class="dashboard-grid">
+                {% for order in orders %}
+                    <div class="order-card">
+                        <p><strong>Status:</strong> {{ order.status|title }}</p>
+                        <p>{{ order.delivery_date }} at {{ order.delivery_time }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty-state">
+                No gifts scheduled yet.<br>
+                Your perfect surprise starts here.
+            </p>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

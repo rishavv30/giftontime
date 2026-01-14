@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Login – GiftOnTime{% endblock %}
+
+{% block content %}
+<section class="auth-page">
+    <div class="auth-card">
+        <h2>Welcome back</h2>
+        <p>Log in to manage your scheduled gifts.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="email"email name="email" placeholder="Email address" required>
+            <input type="password" name="password" placeholder="Password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <span class="auth-switch">
+            New here? <a href="/signup/">Create account</a>
+        </span>
+    </div>
+</section>
+{% endblock %}

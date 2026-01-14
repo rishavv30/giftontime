@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Schedule a Gift · GiftOnTime{% endblock %}
+
+{% block content %}
+<section class="order-page">
+  <div class="order-container">
+
+    <div class="step-indicator">
+      <span class="active">1</span>
+      <span>2</span>
+      <span>3</span>
+      <span>4</span>
+    </div>
+
+    <form method="post" id="orderForm">
+      {% csrf_token %}
+
+      <!-- STEP 1 -->
+      <div class="step active">
+        <h2>Choose the Gift</h2>
+        <p>Paste the product link you want us to deliver.</p>
+        <input type="url" name="product_link" placeholder="Amazon / Flipkart link" required>
+        <button type="button" class="next-btn">Next</button>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step">
+        <h2>Delivery Date & Time</h2>
+        <input type="date" name="delivery_date" required>
+        <input type="time" name="delivery_time" required>
+        <div class="btn-group">
+          <button type="button" class="back-btn">Back</button>
+          <button type="button" class="next-btn">Next</button>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step">
+        <h2>Delivery Address</h2>
+        <textarea name="address" placeholder="Full delivery address" required></textarea>
+        <div class="btn-group">
+          <button type="button" class="back-btn">Back</button>
+          <button type="button" class="next-btn">Next</button>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step">
+        <h2>Review & Confirm</h2>
+        <p>Everything looks good?</p>
+        <button type="submit" class="submit-btn">Schedule Gift 🎁</button>
+        <button type="button" class="back-btn link-btn">Edit</button>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<script src="{% static 'js/order-steps.js' %}"></script>
+{% endblock %}

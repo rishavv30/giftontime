@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GiftOnTime – Delivering Surprises Right On Time</title>
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">GiftOnTime</div>
+    <div class="nav-links">
+        {% if user.is_authenticated %}
+            <a href="/dashboard/">Dashboard</a>
+            <a href="/logout/">Logout</a>
+        {% else %}
+            <a href="/login/">Login</a>
+            <a href="/signup/" class="cta">Get Started</a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>Delivering Your Surprises <span>Right On Time</span></h1>
+    <p>
+        Order gifts anytime. We make sure they reach your loved ones
+        exactly when the moment matters.
+    </p>
+
+    <a href="{% if user.is_authenticated %}/order/new/{% else %}/signup/{% endif %}" class="hero-btn">
+        Schedule a Gift
+    </a>
+</section>
+
+<!-- OCCASIONS -->
+<section class="occasion-grid">
+
+    <div class="occasion-card">
+        <div class="img-wrap">
+            <img src="{% static 'images/birthday.jpg' %}" alt="Birthday Delivery">
+        </div>
+        <h4>Birthday Delivery</h4>
+    </div>
+
+    <div class="occasion-card">
+        <div class="img-wrap">
+            <img src="{% static 'images/anniversary.jpg' %}" alt="Anniversary Gifts">
+        </div>
+        <h4>Anniversary Gifts</h4>
+    </div>
+
+    <div class="occasion-card">
+        <div class="img-wrap">
+            <img src="{% static 'images/custom.jpg' %}" alt="Custom Occasions">
+        </div>
+        <h4>Custom Occasions</h4>
+    </div>
+
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works">
+    <h2>How GiftOnTime Works</h2>
+
+    <div class="steps">
+        <div class="step">
+            <span>1</span>
+            <h4>Paste Product Link</h4>
+            <p>Amazon, Flipkart or any store</p>
+        </div>
+
+        <div class="step">
+            <span>2</span>
+            <h4>Choose Date & Time</h4>
+            <p>Birthdays, anniversaries or surprises</p>
+        </div>
+
+        <div class="step">
+            <span>3</span>
+            <h4>We Deliver On Time</h4>
+            <p>No early. No late. Perfect timing.</p>
+        </div>
+    </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+    <h2>Moments deserve perfect timing</h2>
+    <a href="{% if user.is_authenticated %}/order/new/{% else %}/signup/{% endif %}">
+        Schedule Your First Gift
+    </a>
+</section>
+
+
+<!-- TRUST -->
+<section class="trust">
+    <h2>We buy it. We store it. We deliver it.</h2>
+    <p>You just focus on making someone smile.</p>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    © 2026 GiftOnTime · Delivering moments, not just packages ✨
+</footer>
+
+</body>
+</html>

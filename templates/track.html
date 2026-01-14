@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Track Your Gift</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f6f4f1;
+        }
+
+        .card {
+            max-width: 600px;
+            margin: 80px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+        }
+
+        .timeline {
+            position: relative;
+            margin-left: 20px;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .circle {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #ccc;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .active {
+            background: #4caf50;
+        }
+
+        .line {
+            position: absolute;
+            left: 10px;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: #ddd;
+            z-index: -1;
+        }
+
+        .step-text h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .step-text p {
+            margin: 4px 0 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 14px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+
+    <h1>📦 Tracking Your Gift</h1>
+    <p class="subtitle">
+        We’re taking care of everything.  
+        Your surprise will arrive right on time.
+    </p>
+
+    <div class="timeline">
+        <div class="line"></div>
+
+        <!-- STEP 1 -->
+        <div class="step">
+            <div class="circle active"></div>
+            <div class="step-text">
+                <h3>Order Received</h3>
+                <p>We’ve received your request and scheduled your delivery.</p>
+            </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step">
+            <div class="circle {% if order.status != 'pending' %}active{% endif %}"></div>
+            <div class="step-text">
+                <h3>Product Purchased</h3>
+                <p>Your gift has been securely purchased and stored.</p>
+            </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step">
+            <div class="circle {% if order.status == 'delivered' %}active{% endif %}"></div>
+            <div class="step-text">
+                <h3>Delivered</h3>
+                <p>Your gift has been delivered on the selected date.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Scheduled for {{ order.delivery_date }} at {{ order.delivery_time }}
+    </div>
+
+</div>
+
+</body>
+</html>
