@@ -7,7 +7,7 @@ when you order a gift online (Amazon, Flipkart, etc.), it often arrives **too ea
 GiftOnTime lets users schedule gifts to be delivered on a **specific date and time**, so special moments stay special.
 
 ---
-Live link - http://127.0.0.1:8000/
+Live link - https://giftontime.onrender.com/
 
 ## 🚀 The Idea
 
