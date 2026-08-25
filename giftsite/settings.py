@@ -24,12 +24,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ej8e#5@i47rb*!6954-&se9^#um$n%c@%n!plvynq$%9dzm8u4'
+# Read from the environment in production. The key that used to live here was
+# committed to a public repository, so it must be treated as compromised and
+# never reused.
+SECRET_KEY = os.environ.get(
+    'SECRET_KEY',
+    'django-insecure-local-development-only-set-SECRET_KEY-in-production',
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Defaults to True so local development keeps working; deployments must set
+# DEBUG=False explicitly.
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ["*"]
+# "*" disabled Host header validation entirely. Real hosts come from the
+# environment as a comma-separated list.
+ALLOWED_HOSTS = os.environ.get(
+    'ALLOWED_HOSTS', 'localhost,127.0.0.1'
+).split(',')
 
 
 # Application definition
