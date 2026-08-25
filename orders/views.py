@@ -5,6 +5,9 @@ from django.contrib.auth.decorators import login_required
 from .models import Order
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.core.exceptions import ValidationError
+from django.core.validators import validate_email
+from django.contrib.auth.password_validation import validate_password
 
 def home(request):
     if request.method == "POST":
@@ -36,6 +39,7 @@ def create_order(request):
 
     return render(request, 'create_order.html')
 
+@login_required
 def track_order(request):
     order = None
     error = None
@@ -44,8 +48,12 @@ def track_order(request):
         order_id = request.POST.get('order_id')
 
         try:
-            order = Order.objects.get(id=order_id)
-        except Order.DoesNotExist:
+            # Scoped to request.user. Without this filter any visitor could walk
+            # sequential order IDs and read every user's delivery address.
+            order = Order.objects.get(id=order_id, user=request.user)
+        except (Order.DoesNotExist, ValueError):
+            # Same message either way, so the response cannot be used to probe
+            # which order IDs exist.
             error = "Order not found. Please check your Order ID."
 
     return render(request, 'track.html', {
@@ -70,8 +78,23 @@ def signup_view(request):
             messages.error(request, "Passwords do not match.")
             return redirect("signup")
 
+        try:
+            validate_email(email)
+        except ValidationError:
+            messages.error(request, "Please enter a valid email address.")
+            return redirect("signup")
+
         if User.objects.filter(username=email).exists():
             messages.error(request, "Account already exists.")
+            return redirect("signup")
+
+        # AUTH_PASSWORD_VALIDATORS is configured in settings, but create_user()
+        # does not run it. Without this call a one-character password is accepted.
+        try:
+            validate_password(password1)
+        except ValidationError as exc:
+            for message in exc.messages:
+                messages.error(request, message)
             return redirect("signup")
 
         user = User.objects.create_user(
