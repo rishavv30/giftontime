@@ -80,6 +80,46 @@
             font-size: 14px;
             color: #777;
         }
+
+        .lookup {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .lookup input {
+            flex: 1;
+            padding: 12px 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .lookup button {
+            padding: 12px 24px;
+            border: 0;
+            border-radius: 8px;
+            background: #4caf50;
+            color: white;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .error {
+            padding: 14px 16px;
+            margin-bottom: 24px;
+            border-radius: 8px;
+            background: #fdecea;
+            color: #b3261e;
+            font-size: 14px;
+        }
+
+        .empty {
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+            padding: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -92,6 +132,18 @@
         Your surprise will arrive right on time.
     </p>
 
+    <form class="lookup" method="post">
+        {% csrf_token %}
+        <input type="text" name="order_id" placeholder="Enter your Order ID"
+               value="{{ order.id|default_if_none:'' }}" required>
+        <button type="submit">Track</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if order %}
     <div class="timeline">
         <div class="line"></div>
 
@@ -126,6 +178,9 @@
     <div class="footer">
         Scheduled for {{ order.delivery_date }} at {{ order.delivery_time }}
     </div>
+    {% elif not error %}
+        <p class="empty">Enter an order ID above to see its progress.</p>
+    {% endif %}
 
 </div>
 

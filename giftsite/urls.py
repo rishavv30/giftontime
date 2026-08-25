@@ -24,8 +24,6 @@ urlpatterns = [
     path('success/<int:order_id>/', views.success, name='success'),
     path('track/', views.track_order, name='track'),
 
-    path('', views.landing, name='landing'),
-
     path('signup/', views.signup_view, name='signup'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),

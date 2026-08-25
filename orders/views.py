@@ -10,15 +10,11 @@ from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
 
 def home(request):
-    if request.method == "POST":
-        Order.objects.create(
-            product_link=request.POST.get('product_link'),
-            delivery_date=request.POST.get('delivery_date'),
-            delivery_time=request.POST.get('delivery_time'),
-            address=request.POST.get('address'),
-        )
-        return redirect('success' , order_id=order.id)
-
+    # home.html is a static landing page with no form, so this view never
+    # received a POST. The POST branch that used to live here could not work
+    # anyway: it called Order.objects.create() without a user (the FK is not
+    # nullable) and then referenced an `order` variable that was never assigned.
+    # Orders are created by create_order() below.
     return render(request, 'home.html')
 
 
@@ -126,7 +122,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect("landing")
+    return redirect("home")
 
 
 
@@ -134,6 +130,3 @@ def logout_view(request):
 def dashboard(request):
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
     return render(request, 'dashboard.html', {'orders': orders})
-
-def landing(request):
-    return render(request, 'landing.html')
